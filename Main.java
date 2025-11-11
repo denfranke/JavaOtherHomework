@@ -13,7 +13,8 @@ public class Main {
         };
 
         int[] nationalTeam = mergeAll(teams);
-        System.out.println(Arrays.toString(nationalTeam));// [51, 45, 31, 31, 30, 24, 22, 20, 18, 17]
+        System.out.println(Arrays.toString(nationalTeam));
+        // [51, 45, 31, 31, 30, 24, 22, 20, 18, 17]
     }
 
     /**
@@ -37,10 +38,10 @@ public class Main {
         while ((ia < teamA.length || ib < teamB.length) && ic < 10) {
             if (ia == teamA.length) {
                 c[ic] = teamB[ib];
-                ib++;
+                break;
             } else if (ib == teamB.length) {
                 c[ic] = teamA[ia];
-                ia++;
+                break;
             } else if (teamA[ia] >= teamB[ib]) {
                 c[ic] = teamA[ia];
                 ia++;
