@@ -36,13 +36,7 @@ public class Main {
         int ia = 0, ib = 0, ic = 0;
 
         while ((ia < teamA.length || ib < teamB.length) && ic < 10) {
-            if (ia == teamA.length) {
-                c[ic] = teamB[ib];
-                break;
-            } else if (ib == teamB.length) {
-                c[ic] = teamA[ia];
-                break;
-            } else if (teamA[ia] >= teamB[ib]) {
+            if (teamA[ia] >= teamB[ib]) {
                 c[ic] = teamA[ia];
                 ia++;
             } else {
