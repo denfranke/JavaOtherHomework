@@ -1,49 +1,42 @@
-package Module_additional;
+package Module_additional.folder5;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        // Заполнение дерева
-        // Названия переменных указывают на место заполняемого узла
-        // например, rl - повернуть на право, затем налево
-        // После заполнения дерево выводится на консоль, можете ориентироваться на него
+        String source = "CACABABABCCCAABAC";
 
-        Tree ll = new Tree("Александа");
-        Tree lr = new Tree("Владимир");
-        Tree l = new Tree("Борис");
-        l.setLeft(ll);
-        l.setRight(lr);
-
-        Tree rl = new Tree("Иннокентий");
-        Tree rr = new Tree("Пантелеймон");
-        Tree r = new Tree("Константин");
-        r.setLeft(rl);
-        r.setRight(rr);
-
-        Tree root = new Tree("Зоя");
-        root.setLeft(l);
-        root.setRight(r);
-
-        System.out.println(root); // Выведем дерево в консоль
-
-        System.out.println("Проверка поиска по дереву:");
-        System.out.println(root.contains("Иннокентий")); // true
-        System.out.println(root.contains("Борис")); // true
-        System.out.println(root.contains("Анна")); // false
-
-        System.out.println("Проверка на пирамидальность по длине имени");
-
-        System.out.println(root.isNamePyramid()); // true
-
-        // Меняем имя в одном из узлов на Павел
-        // Пирамидальность должна нарушиться
-        // А из-за того что имя на ту же букву,
-        // в данном случае свойства дерева поиска сохрнаяются
-        rr.setName("Павел");
-        System.out.println(root.isNamePyramid()); // false
-
+        System.out.println(hasRepeats(source, 4)); // true, тк ABAB встречается два раза, хоть эти куски и пересекаются
+        System.out.println(hasRepeats(source, 5)); // false
     }
-}
 
+    public static boolean hasRepeats(String source, int size) {
+        Set<LazyString> slices = new HashSet<>(); // множество всех подстрок длины size
+        LazyString prev = null; // переменная для сохранения предыдущей подстроки
+        for (int i = 0; i <= source.length() - size; i++) { // перебор всех мест старта подстроки
+            LazyString slice; // вырезание подстроки
+            if (prev == null) {
+                // первую подстроку создаём конструктором за линейную асимптотику
+                // ВАШ КОД
+                slice = new LazyString(source, i, i + size);
+            } else {
+                // все остальные через сдвиг вправо от предыдущей подстроки, за O(1)
+                // ВАШ КОД
+                slice = prev.shiftRight();
+            }
+            if (slices.contains(slice)) { // проверка на наличие повтора этой подстроки
+                return true; // если уже встречали, значит повторы нет
+            } else {
+                slices.add(slice);  // иначе запоминаем подстроку и перебираем дальше
+            }
+            prev = slice; // не забываем обновить переменную для предыдущей подстроки для следующей итерации цикла
+        }
+        return false; // если бы нашли, то вышли бы по return true, а значит повторов нет
+    }
+
+}
